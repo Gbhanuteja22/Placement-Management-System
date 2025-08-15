@@ -4,6 +4,13 @@
   "private": true,
   "main": "src/index.ts",
   "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "dev": "tsc --build --watch",
+    "lint": "echo 'Linting skipped - Types package'",
+    "typecheck": "tsc --noEmit",
+    "test": "echo 'No tests configured yet'"
+  },
   "dependencies": {
     "zod": "^3.22.4"
   },

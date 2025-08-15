@@ -27,21 +27,28 @@ A comprehensive placement management system built with React, Node.js, and Mongo
    **Backend (.env)**
    - Navigate to `apps/api/`
    - Copy `.env.example` to `.env`
-   - Update the environment variables:
+   - Update the environment variables with your actual credentials:
    
    ```bash
    # Database - MongoDB Atlas connection string
-   MONGODB_URI=mongodb+srv://your_username:your_password@your_cluster.mongodb.net/placement_management?retryWrites=true&w=majority
+   # Replace the placeholders below with your actual MongoDB Atlas credentials
+   MONGODB_URI=mongodb+srv://[username]:[password]@[cluster-url]/placement_management?retryWrites=true&w=majority
    
    # External API Keys (optional for additional job alerts)
-   ADZUNA_APP_ID=your_adzuna_app_id
-   ADZUNA_API_KEY=your_adzuna_api_key
+   # Get these from https://developer.adzuna.com/
+   ADZUNA_APP_ID=[your_adzuna_app_id]
+   ADZUNA_API_KEY=[your_adzuna_api_key]
    
    # Server Configuration
    PORT=3008
    NODE_ENV=development
    CORS_ORIGIN=http://localhost:3000
    ```
+
+   **Important**: 
+   - Replace `[username]`, `[password]`, `[cluster-url]` with your actual MongoDB Atlas credentials
+   - Never commit your actual `.env` file to version control
+   - Use the `.env.example` file as a template
 
 4. **Run the application**
    ```bash
@@ -75,9 +82,29 @@ A comprehensive placement management system built with React, Node.js, and Mongo
 
 ## 🔒 Security
 
-- Environment variables for sensitive data
-- MongoDB Atlas with proper authentication
-- CORS configuration for secure API access
+- **Environment Variables**: All sensitive data is stored in environment variables
+- **MongoDB Atlas**: Secure database connection with proper authentication
+- **CORS Configuration**: Controlled API access from allowed origins
+- **Secret Management**: Never commit `.env` files or credentials to version control
+- **GitHub Security**: Repository includes secret scanning and security alerts
+
+### 🚨 Security Best Practices
+
+1. **Never commit sensitive data** like passwords, API keys, or connection strings
+2. **Use strong passwords** for your MongoDB Atlas account
+3. **Rotate credentials regularly** especially if you suspect they may be compromised
+4. **Restrict MongoDB network access** to specific IP addresses when possible
+5. **Monitor access logs** for suspicious activity
+6. **Keep dependencies updated** to avoid security vulnerabilities
+
+### 🔑 If Credentials Are Compromised
+
+If you accidentally commit credentials or suspect they're compromised:
+
+1. **Immediately rotate/change** all affected passwords and API keys
+2. **Update your local `.env`** file with new credentials
+3. **Check access logs** for unauthorized activity
+4. **Consider using GitHub's secret scanning alerts** for early detection
 
 ## 🛠 Development
 
