@@ -30,7 +30,15 @@ app.use((req, res, next) => {
   console.log(`${req.method} ${req.path} - ${new Date().toISOString()}`);
   next();
 });
-const MONGODB_URI = 'mongodb+srv://placementuser:PHVyWIorHRAjpkG8@cluster0.r3wjefb.mongodb.net/placement_management?retryWrites=true&w=majority&appName=Cluster0';
+
+// Use environment variable for MongoDB URI
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+  console.error('❌ MONGODB_URI environment variable is not set');
+  process.exit(1);
+}
+
 const UserProfileSchema = new mongoose.Schema({
   clerkUserId: { type: String, required: true, unique: true },
   email: { type: String, required: true },
