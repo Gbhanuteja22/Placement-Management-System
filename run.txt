@@ -1,0 +1,93 @@
+# PlacementPro - Setup & Run Guide
+## Quick Start
+### Automated Setup (Recommended)
+1. Open PowerShell as Administrator
+2. Navigate to project directory: `cd E:\PlacementManagementSystem`
+3. Run: `.\start.ps1` (PowerShell) or `.\start.bat` (Windows)
+4. Check status: `.\check-status.ps1`
+### Manual Setup
+#### Prerequisites
+- Node.js >= 20.0.0
+- npm >= 10.0.0
+- MongoDB Atlas configured
+- Clerk authentication configured
+#### Step 1: Install Dependencies (First Time)
+```bash
+npm install
+```
+#### Step 2: Start API Server
+```bash
+cd apps\api
+node simple-server.js
+```
+#### Step 3: Start Frontend (New Terminal)
+```bash
+cd apps\web
+npm run dev
+```
+## Application URLs
+- **Frontend**: http://localhost:3000
+- **API Server**: http://localhost:3008  
+- **Health Check**: http://localhost:3008/health
+- **Database Status**: http://localhost:3008/db-test/status
+## Available API Endpoints
+- `GET /health` - Server health check
+- `GET /db-test/status` - Database connection status
+- `POST /users/profile` - Create/Update user profile
+- `GET /users/profile/:clerkUserId` - Get user profile
+- `GET /users/profile/:clerkUserId/check-onboarding` - Check onboarding status
+## Testing
+### API Health Check
+```bash
+Invoke-RestMethod -Uri "http://localhost:3008/health" -Method GET
+```
+### Database Status
+```bash
+Invoke-RestMethod -Uri "http://localhost:3008/db-test/status" -Method GET
+```
+### Profile Creation Test
+```bash
+$testData = '{"clerkUserId":"test_user_123","email":"test@mgit.ac.in","firstName":"Test","lastName":"User","rollNumber":"21MH1A0123","age":22,"skills":["JavaScript"]}'
+Invoke-RestMethod -Uri "http://localhost:3008/users/profile" -Method POST -ContentType "application/json" -Body $testData
+```
+## Troubleshooting
+### Restart API Server
+```bash
+Get-Process | Where-Object {$_.ProcessName -eq "node"} | Stop-Process -Force
+cd apps\api
+node simple-server.js
+```
+### Restart Frontend
+```bash
+cd apps\web
+npm run dev
+```
+### Complete Reset
+```bash
+Get-Process | Where-Object {$_.ProcessName -eq "node"} | Stop-Process -Force
+.\start.ps1
+```
+## Development Commands
+```bash
+npm run typecheck    # Type checking
+npm run lint         # Linting  
+npm run format       # Code formatting
+npm run build        # Build all apps
+npm run test         # Run tests
+```
+## Configuration
+### Ports
+- Frontend: 3000
+- API: 3008
+### Database
+- MongoDB Atlas: cluster0.r3wjefb.mongodb.net
+- Database: placement_management
+### Authentication
+- Clerk integration
+- After signup → `/onboarding`
+- After signin → `/dashboard`
+## Success Indicators
+- API health returns: `{"status":"ok","service":"placement-api"}`
+- Database status shows: `"status":"connected"`
+- Frontend loads at http://localhost:3000
+- Profile creation works without errors
